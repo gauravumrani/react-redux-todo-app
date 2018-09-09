@@ -1,0 +1,21 @@
+{
+  "name": "gaurav-react-todo",
+  "description": "",
+  "homepage": "https://stackblitz.com/edit/gaurav-react-todo",
+  "dependencies": {
+    "react": "16.1.1",
+    "react-dom": "16.1.1",
+    "react-scripts": "1.0.10",
+    "uuid": "3.3.2",
+    "redux": "4.0.0",
+    "react-redux": "5.0.7"
+  },
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
