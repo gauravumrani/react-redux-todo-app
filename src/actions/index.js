@@ -2,7 +2,7 @@ import {
   ADD_TODO, REMOVE_TODO, CHECK_TODO, FETCH_SUCCESS, LOADING,
 } from '../constants/action-types';
 
-const URL = 'http://localhost:8080/api/v1/todos';
+const URL = '/api/v1/todos';
 
 export const checkTodo = todo => function (dispatch) {
   dispatch({ type: LOADING, loadingMsg: 'Marking todo as done..' });
