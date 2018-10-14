@@ -25,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint server"
+    "lint": "eslint server",
+    "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
     "eslint": "^5.7.0",
