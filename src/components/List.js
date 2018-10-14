@@ -1,53 +1,73 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-import { removeTodo, checkTodo } from "../actions/index";
+import { connect } from 'react-redux';
+import { removeTodo, checkTodo, fetchPosts } from '../actions/index';
 
-const mapStateToProps = state => {
-  return { todos: state.todos };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    removeTodo: todo => dispatch(removeTodo(todo)),
-    checkTodo: todo => dispatch(checkTodo(todo))
-  };
-};
+const mapStateToProps = state => ({ todos: state.todos, loading: state.loading });
+const mapDispatchToProps = dispatch => ({
+  removeTodo: todo => dispatch(removeTodo(todo)),
+  checkTodo: todo => dispatch(checkTodo(todo)),
+  fetchPosts: () => dispatch(fetchPosts()),
+});
 class ConnectedList extends Component {
   constructor() {
     super();
     this.removeTodo = this.removeTodo.bind(this);
     this.checkTodo = this.checkTodo.bind(this);
   }
-  removeTodo(el){
-    this.props.removeTodo({id: el.id});
+
+  componentDidMount() {
+    this.props.fetchPosts();
   }
-  checkTodo(el){
-    this.props.checkTodo({id: el.id, value: !el.check});
+
+  removeTodo(el) {
+    this.props.removeTodo({ id: el._id });
   }
+
+  checkTodo(el) {
+    this.props.checkTodo({ id: el._id, value: !el.check });
+  }
+
   render() {
-    let { todos } = this.props;
-    const isEmpty = (!todos || !todos.length) ? true : false;
+    const { todos, loading } = this.props;
+    const isEmpty = !!((!todos || !todos.length));
     return (
       <div id="todo-wrapper">
-      <h2>Todos</h2>
-      <p> {(isEmpty ? 'No Todos': '')} </p>
+        <h2>Todos</h2>
+        <h4>{(loading && loading.isLoading ? loading.loadingMsg : '')}</h4>
+        <p>
+          {' '}
+          {(isEmpty ? 'No Todos' : '')}
+          {' '}
+        </p>
         <div id="todo-list">
           <ul>
             {this.props.todos.map(el => (
-              <li className={'todo-item'} key={el.id}>
-                <div className={'item-name '+(el.check ? 'checkItem' : '')}>{el.title}</div>
+              <li className="todo-item" key={el._id}>
+                <div className={`item-name ${el.check ? 'checkItem' : ''}`}>{el.title}</div>
                 <div>
-                  <button className="btn btn-danger btn-sm" 
-                  onClick={()=>this.removeTodo(el)}><i className="fa fa-trash"></i> </button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => this.removeTodo(el)}
+                  >
+                    <i className="fa fa-trash" />
+                  </button>
                   &nbsp;&nbsp;
-                  <button className="btn btn-success btn-sm" 
-                  onClick={()=>this.checkTodo(el)}> <i className="fa fa-check"></i> </button>
+                  <button
+                    className="btn btn-success btn-sm"
+                    onClick={() => this.checkTodo(el)}
+                  >
+                    {' '}
+                    <i className="fa fa-check" />
+                    {' '}
+
+                  </button>
                 </div>
               </li>
             ))}
           </ul>
         </div>
       </div>
-    )
+    );
   }
 }
 const List = connect(mapStateToProps, mapDispatchToProps)(ConnectedList);

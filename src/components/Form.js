@@ -1,21 +1,18 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import uuidv1 from "uuid";
-import { addTodo } from "../actions/index";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addTodo } from '../actions/index';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addTodo: todo => dispatch(addTodo(todo))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  addTodo: todo => dispatch(addTodo(todo)),
+});
 
 class ConnectedForm extends Component {
   constructor() {
     super();
     this.state = {
-      title:'',
-      isEmpty: false 
-    }
+      title: '',
+      isEmpty: false,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -27,13 +24,12 @@ class ConnectedForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { title } = this.state;
-    if(title.trim() == ""){
+    if (title.trim() === '') {
       this.setState({ isEmpty: true });
       return;
     }
-    const id = uuidv1();
-    this.props.addTodo({ title, id });
-    this.setState({ title: "" });
+    this.props.addTodo({ title });
+    this.setState({ title: '' });
   }
 
   render() {
@@ -47,11 +43,15 @@ class ConnectedForm extends Component {
               type="text"
               className="form-control"
               id="title"
-              value = {title}
+              value={title}
               onChange={this.handleChange}
-              autoComplete = "off"
+              autoComplete="off"
             />
-            <span className='text-danger'> {(isEmpty ? 'Todo can not be empty': '')} </span>
+            <span className="text-danger">
+              {' '}
+              {(isEmpty ? 'Todo can not be empty' : '')}
+              {' '}
+            </span>
           </div>
           <button type="submit" className="btn btn-success">
             SAVE

@@ -1,0 +1,10 @@
+{
+    "extends": "airbnb",
+    "env": {
+        "es6": true
+    },
+    "rules": {
+        "no-underscore-dangle": "off",
+        "func-names": ["error", "never"]
+    }
+}
